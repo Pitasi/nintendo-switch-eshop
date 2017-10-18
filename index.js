@@ -7,6 +7,7 @@ const Q = require("q");
 
 const GET_GAMES_US_URL = "http://www.nintendo.com/json/content/get/filter/game?system=switch&sort=title&direction=asc&shop=ncom";
 const GET_GAMES_EU_URL = "http://search.nintendo-europe.com/en/select";
+const GET_GAMES_RU_URL = "http://search.nintendo-europe.com/ru/select";
 const GET_GAMES_JP_CURRENT = "https://www.nintendo.co.jp/data/software/xml-system/switch-onsale.xml";
 const GET_GAMES_JP_COMING = "https://www.nintendo.co.jp/data/software/xml-system/switch-coming.xml";
 const GET_GAMES_JP_ALT = "https://www.nintendo.co.jp/api/search/title?category=products&pf=switch&q=*&count=25";
@@ -245,6 +246,30 @@ function getGamesEurope() {
 }
 
 /**
+ * Fetches all games on russian eshop. Paginates every 9999 games.
+ * @returns {Promise<GameEU[]>} Promise containing all the games.
+ */
+function getGamesRussia() {
+    return new Promise((resolve, reject) => {
+        request.get({
+            url: GET_GAMES_RU_URL,
+            qs: {
+                fq: "type:GAME AND system_type:nintendoswitch* AND product_code_txt:*",
+                q: "*",
+                rows: "9999",
+                sort: "sorting_title asc",
+                start: "0",
+                wt: "json"
+            }
+        }, (err, res, body) => {
+            if(err) return reject(err);
+            let responseWrapper = JSON.parse(body);
+            resolve(responseWrapper.response.docs);
+        });
+    });
+}
+
+/**
  * Gets all active eshops given a list of countries.
  * @param {string[]} countryCodes A list of 2 digit country codes for every country eshop to lookup. (ISO 3166-1 alpha-2 country codes)
  * @param {string} gamecode A 14 digits game NSUID from the desired region.
@@ -428,6 +453,7 @@ module.exports = {
     getShopsByCountryCodes: getShopsByCountryCodes,
     getShopsAmerica: getShopsAmerica,
     getShopsEurope: getShopsEurope,
+    getGamesRussia: getGamesRussia,
     getShopsAsia: getShopsAsia,
     getActiveShops: getActiveShops
 };

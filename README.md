@@ -1,8 +1,3 @@
-<p>
-    <a href="https://www.npmjs.com/package/nintendo-switch-eshop"><img src="https://img.shields.io/npm/v/nintendo-switch-eshop.svg?maxAge=3600" alt="NPM version" /></a>
-    <a href="https://www.npmjs.com/package/nintendo-switch-eshop"><img src="https://img.shields.io/npm/dt/nintendo-switch-eshop.svg?maxAge=3600" alt="NPM downloads" /></a>
-</p>
-
 ## About
 **nintendo-switch-eshop** is a npm lib module written to extract Nintendo Switch's eShop game and pricing information.
 
@@ -27,6 +22,9 @@ const SwitchEshop = require('nintendo-switch-eshop');
 </dd>
 <dt><a href="#getGamesEurope">getGamesEurope()</a> ⇒ <code>Promise&lt;Array&lt;GameEU&gt;&gt;</code></dt>
 <dd><p>Fetches all games on european eshop. Paginates every 9999 games.</p>
+</dd>
+<dt><a href="#getGamesRussia">getGamesRussia()</a> ⇒ <code>Promise&lt;Array&lt;GameEU&gt;&gt;</code></dt>
+<dd><p>Fetches all games on russian (european) eshop. Paginates every 9999 games.</p>
 </dd>
 <dt><a href="#getShopsByCountryCodes">getShopsByCountryCodes(countryCodes, gamecode, region)</a> ⇒ <code>Promise&lt;Array&lt;Eshop&gt;&gt;</code></dt>
 <dd><p>Gets all active eshops given a list of countries.</p>
